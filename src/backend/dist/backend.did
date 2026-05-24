@@ -1,0 +1,161 @@
+type StudentView = 
+ record {
+   className: opt text;
+   createdAt: int;
+   department: text;
+   email: opt text;
+   enrollmentId: text;
+   fatherName: opt text;
+   isLocked: bool;
+   mobile: opt text;
+   motherName: opt text;
+   name: text;
+   photoFileId: opt text;
+   profileComplete: bool;
+   rollNumber: opt text;
+   updatedAt: int;
+ };
+type StudentUpdateInput = 
+ record {
+   department: opt text;
+   name: opt text;
+   passwordHash: opt text;
+   profileComplete: opt bool;
+ };
+type StudentProfileInput = 
+ record {
+   className: opt text;
+   email: opt text;
+   fatherName: opt text;
+   mobile: opt text;
+   motherName: opt text;
+   photoFileId: opt text;
+   rollNumber: opt text;
+ };
+type RegistrationView = 
+ record {
+   courseCodes: vec text;
+   createdAt: int;
+   enrollmentId: text;
+   lockTimestamp: opt int;
+   locked: bool;
+   pdfFileId: opt text;
+   registrationId: text;
+   totalCredits: nat;
+   updatedAt: int;
+ };
+type PasswordResetStatus = 
+ variant {
+   approved;
+   pending;
+   rejected;
+ };
+type PasswordResetRequestView = 
+ record {
+   enrollmentId: text;
+   requestId: text;
+   requestedAt: int;
+   resolvedAt: opt int;
+   status: PasswordResetStatus;
+ };
+type OkTextOrErr = 
+ variant {
+   err: text;
+   ok: text;
+ };
+type OkOrErr = 
+ variant {
+   err: text;
+   ok;
+ };
+type CourseView = 
+ record {
+   courseCode: text;
+   courseName: text;
+   createdAt: int;
+   credits: nat;
+   enrolledCount: nat;
+   facultyName: text;
+   maxSeats: nat;
+   schedule: text;
+ };
+type CourseUpdateInput = 
+ record {
+   courseName: opt text;
+   credits: opt nat;
+   facultyName: opt text;
+   maxSeats: opt nat;
+   schedule: opt text;
+ };
+type CourseInput = 
+ record {
+   courseCode: text;
+   courseName: text;
+   credits: nat;
+   facultyName: text;
+   maxSeats: nat;
+   schedule: text;
+ };
+type BulkStudentRow = 
+ record {
+   department: text;
+   enrollmentId: text;
+   name: text;
+ };
+type AdminStats = 
+ record {
+   activeRegistrations: nat;
+   registeredStudents: nat;
+   totalCourses: nat;
+   totalStudents: nat;
+ };
+type ActivityLog = 
+ record {
+   action: text;
+   actorId: text;
+   logId: text;
+   timestamp: int;
+ };
+service : {
+  addCourse: (input: CourseInput) -> (OkOrErr);
+  addStudent: (name: text, enrollmentId: text, department: text) -> (OkOrErr);
+  adminAddCourseToStudent: (enrollmentId: text, courseCode: text) ->
+   (OkOrErr);
+  adminLogin: (password: text) -> (OkTextOrErr);
+  adminRemoveCourseFromStudent: (enrollmentId: text, courseCode: text) ->
+   (OkOrErr);
+  adminResetPassword: (enrollmentId: text, newPassword: text) -> (OkOrErr);
+  bulkUploadStudents: (rows: vec BulkStudentRow) ->
+   (record {
+      errors: vec text;
+      imported: nat;
+    });
+  deleteCourse: (courseCode: text) -> (OkOrErr);
+  deleteStudent: (enrollmentId: text) -> (OkOrErr);
+  finalSubmitRegistration: (enrollmentId: text) -> (OkTextOrErr);
+  getAdminStats: () -> (AdminStats) query;
+  getAllCourses: () -> (vec CourseView) query;
+  getAllRegistrations: () -> (vec RegistrationView) query;
+  getAllStudents: () -> (vec StudentView) query;
+  getCourse: (courseCode: text) -> (opt CourseView) query;
+  getPasswordResetRequests: () -> (vec PasswordResetRequestView) query;
+  getRecentActivity: () -> (vec ActivityLog) query;
+  getRegistration: (enrollmentId: text) -> (opt RegistrationView) query;
+  getStudent: (enrollmentId: text) -> (opt StudentView) query;
+  getStudentPassword: (enrollmentId: text) -> (opt text) query;
+  registerCourses: (enrollmentId: text, courseCodes: vec text) -> (OkOrErr);
+  requestPasswordReset: (enrollmentId: text) -> (OkOrErr);
+  studentLogin: (enrollmentId: text, password: text) -> (OkTextOrErr);
+  toggleStudentLock: (enrollmentId: text, lock: bool) ->
+   (variant {
+      err: text;
+      ok: StudentView;
+    });
+  unlockRegistration: (enrollmentId: text) -> (OkOrErr);
+  updateCourse: (courseCode: text, input: CourseUpdateInput) -> (OkOrErr);
+  updatePdfFileId: (enrollmentId: text, pdfFileId: text) -> (OkOrErr);
+  updateStudent: (enrollmentId: text, updates: StudentUpdateInput) ->
+   (OkOrErr);
+  updateStudentProfile: (enrollmentId: text, profileData:
+   StudentProfileInput) -> (OkOrErr);
+}

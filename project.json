@@ -1,0 +1,27 @@
+{
+  "overview": "A complete Student Course Registration Portal with CBSE-inspired design, featuring admin control panel, bulk Excel student onboarding, course management, role-based access, and PDF registration slip generation with QR codes.",
+  "features": [
+    "Admin dashboard with stats and charts",
+    "Excel bulk student upload with auto-generated passwords",
+    "Student portal with profile completion gate",
+    "Course selection with conflict and credit validation",
+    "Final submit locks registration (admin-only unlock)",
+    "PDF registration slip with QR code and student photo",
+    "Admin-only profile updates after initial setup",
+    "Password reset request workflow",
+    "Dark/light theme toggle",
+    "Responsive CBSE-inspired design"
+  ],
+  "category": "education",
+  "tags": [
+    "student-portal",
+    "course-registration",
+    "admin-panel",
+    "cbse",
+    "education",
+    "excel-upload",
+    "pdf-generator",
+    "role-based-access"
+  ],
+  "last_updated": "2026-05-14T20:31:39.432Z"
+}

@@ -1,0 +1,152 @@
+// Version: 3.0.0
+type ActivityLog__627147670 =
+  {action : Text; actorId : Text; logId : Text; timestamp : Int};
+type Course__848816755 =
+  {
+    courseCode : Text;
+    var courseName : Text;
+    createdAt : Int;
+    var credits : Nat;
+    var enrolledCount : Nat;
+    var facultyName : Text;
+    var maxSeats : Nat;
+    var schedule : Text
+  };
+type Data__791452850<K, V> =
+  {var count : Nat__490723111; kvs : [var ?(K, V)]};
+type Internal__8484328<K, V> =
+  {children : [var ?Node__46230540<K, V>]; data : Data__791452850<K, V>};
+type Leaf__809889148<K, V> = {data : Data__791452850<K, V>};
+type Map__158565046<K, V> = Map__297112838<K, V>;
+type Map__297112838<K, V> =
+  {var root : Node__46230540<K, V>; var size : Nat__490723111};
+type Map__605269027<K, V> = Map__158565046<K, V>;
+type Nat__490723111 = Nat__920180692;
+type Nat__920180692 = Nat;
+type Node__46230540<K, V> =
+  {#internal : Internal__8484328<K, V>; #leaf : Leaf__809889148<K, V>};
+type Node__585180226<T> =
+  {
+    var next : ?Node__585180226<T>;
+    var previous : ?Node__585180226<T>;
+    value : T
+  };
+type OldStudent__333394504 =
+  {
+    var className : ?Text;
+    createdAt : Int;
+    var department : Text;
+    var email : ?Text;
+    enrollmentId : Text;
+    var fatherName : ?Text;
+    var isLocked : Bool;
+    var mobile : ?Text;
+    var motherName : ?Text;
+    var name : Text;
+    var passwordHash : Text;
+    var photoFileId : ?Text;
+    var profileComplete : Bool;
+    var rollNumber : ?Text;
+    var updatedAt : Int
+  };
+type PasswordResetRequest__94815113 =
+  {
+    enrollmentId : Text;
+    requestId : Text;
+    requestedAt : Int;
+    var resolvedAt : ?Int;
+    var status : PasswordResetStatus__384017904
+  };
+type PasswordResetStatus__384017904 = {#approved; #pending; #rejected};
+type Registration__282286680 =
+  {
+    var courseCodes : [Text];
+    createdAt : Int;
+    enrollmentId : Text;
+    var lockTimestamp : ?Int;
+    var locked : Bool;
+    var pdfFileId : ?Text;
+    registrationId : Text;
+    var totalCredits : Nat;
+    var updatedAt : Int
+  };
+type Student__1072795660 =
+  {
+    var className : ?Text;
+    createdAt : Int;
+    var department : Text;
+    var email : ?Text;
+    enrollmentId : Text;
+    var fatherName : ?Text;
+    var isLocked : Bool;
+    var mobile : ?Text;
+    var motherName : ?Text;
+    var name : Text;
+    var passwordHash : Text;
+    var photoFileId : ?Text;
+    var plainPassword : Text;
+    var profileComplete : Bool;
+    var rollNumber : ?Text;
+    var updatedAt : Int
+  };
+actor ({
+  stable ADMIN_EMAIL : Text;
+  stable MAX_CREDITS : Nat;
+  stable activityLog :
+    {
+      var back : ?Node__585180226<ActivityLog__627147670>;
+      var front : ?Node__585180226<ActivityLog__627147670>;
+      var size : Nat__490723111
+    };
+  stable adminState : {var adminPasswordHash : Text};
+  stable counterState :
+    {var nextLogId : Nat; var nextRegId : Nat; var nextResetId : Nat};
+  stable courses :
+    {
+      var root : Node__46230540<Text, Course__848816755>;
+      var size : Nat__490723111
+    };
+  stable registrations :
+    {
+      var root : Node__46230540<Text, Registration__282286680>;
+      var size : Nat__490723111
+    };
+  stable resetRequests :
+    {
+      var root : Node__46230540<Text, PasswordResetRequest__94815113>;
+      var size : Nat__490723111
+    };
+  in students : Map__605269027<Text, OldStudent__333394504>
+}, {
+  stable ADMIN_EMAIL : Text;
+  stable MAX_CREDITS : Nat;
+  stable activityLog :
+    {
+      var back : ?Node__585180226<ActivityLog__627147670>;
+      var front : ?Node__585180226<ActivityLog__627147670>;
+      var size : Nat__490723111
+    };
+  stable adminState : {var adminPasswordHash : Text};
+  stable counterState :
+    {var nextLogId : Nat; var nextRegId : Nat; var nextResetId : Nat};
+  stable courses :
+    {
+      var root : Node__46230540<Text, Course__848816755>;
+      var size : Nat__490723111
+    };
+  stable registrations :
+    {
+      var root : Node__46230540<Text, Registration__282286680>;
+      var size : Nat__490723111
+    };
+  stable resetRequests :
+    {
+      var root : Node__46230540<Text, PasswordResetRequest__94815113>;
+      var size : Nat__490723111
+    };
+  stable students :
+    {
+      var root : Node__46230540<Text, Student__1072795660>;
+      var size : Nat__490723111
+    }
+});
